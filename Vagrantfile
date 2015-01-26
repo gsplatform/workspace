@@ -5,5 +5,17 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "base"
+
+  config.vm.box = "chef/centos-6.5"
+
+  # Setup a development environment
+  config.vm.define "dev" do |dev|
+
+  end
+
+  # Setup a demo/production server
+  config.vm.define "prod", autostart: false do |prod|
+
+  end
+
 end
