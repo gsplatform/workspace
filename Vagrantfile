@@ -8,14 +8,41 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "chef/centos-6.5"
 
+  # Automated deployment with Ansible
+  config.vm.provision "ansible" do |ansible|
+
+    ansible.playbook = "deployment/common-redhat/playbook.yml"
+
+    ansible.sudo = true
+    ansible.sudo_user = 'root'
+    ansible.verbose = 'vvvv'
+
+    ansible.extra_vars = {
+      ansible_ssh_user: 'vagrant'
+    }
+  end
+
   # Setup a development environment
   config.vm.define "dev" do |dev|
 
+    dev.vm.network :forwarded_port, guest: 80,   host: 8000
+    dev.vm.network :forwarded_port, guest: 8080, host: 8080
+
+    # Virtualbox configuration
+    # (Adjust values to match your hardware)
+    dev.vm.provider "virtualbox" do |vb|
+      vb.cpus = 2
+      vb.memory = 1024
+      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    end
+
+    # dev.vm.provision "shell", path: "inventory/dev/setup.sh"
+    # dev.vm.provision "shell", path: "inventory/dev/data.sh"
   end
 
   # Setup a demo/production server
   config.vm.define "prod", autostart: false do |prod|
-
+    # (TODO: configure a remote deployment)
   end
 
 end
