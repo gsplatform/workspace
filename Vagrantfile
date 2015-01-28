@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     ansible.sudo = true
     ansible.sudo_user = 'root'
-    ansible.verbose = 'vvvv'
+    ansible.verbose = 'v'
 
     ansible.extra_vars = {
       ansible_ssh_user: 'vagrant'

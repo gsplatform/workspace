@@ -1,0 +1,98 @@
+---
+##############
+# CKAN setup #
+##############
+
+- name: Install needed packages
+  action: yum pkg={{item}} state=installed
+  with_items:
+    - p7zip
+    - httpd
+    - gdal-python
+
+- name: Create link of pg_config for PostgreSQL 9.3
+  action: command ln -s /usr/pgsql-9.3/bin/pg_config /usr/bin/pg_config
+
+- name: Add CKAN path
+  action: file path=/var/local/ckan/default state=directory
+
+- name: Add deployment folders
+  shell: "cd /var/local/ckan/default && mkdir log && mkdir run && mkdir tmp && mkdir -p files/resources && mkdir -p files/storage"
+
+- name: Create virtualenv for CKAN
+  shell: virtualenv --setuptools --system-site-packages /var/local/ckan/default/pyenv
+
+- name: Change owner of virtualenv to ckaner
+  shell: chown -R ckaner:users /var/local/ckan/default
+
+- name: Change owner of tmp to apache
+  shell: chown -R apache:apache /var/local/ckan/default/tmp
+
+- name: Install latest pip
+  action: pip name=pip virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Get CKAN from git
+  action: git repo=https://github.com/PublicaMundi/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version=dev.publicamundi.eu
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src/ckan
+
+- name: Install CKAN requirements
+  action: pip requirements=/var/local/ckan/default/pyenv/src/ckan/requirements.txt virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Run setup.py develop for CKAN
+  action: command chdir=/var/local/ckan/default/pyenv/src/ckan/ ../../bin/python setup.py develop
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Get ckanext-archiver from git
+  action: git repo=https://github.com/PublicaMundi/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver version=dev.publicamundi.eu
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
+
+- name: Run setup.py develop for ckanext-archiver
+  action: command chdir=/var/local/ckan/default/pyenv/src/ckanext-archiver/ ../../bin/python setup.py develop
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Install ckanext-archiver requirements
+  action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-archiver/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Get ckanext-datastorer from git
+  action: git repo=https://github.com/PublicaMundi/ckanext-datastorer.git dest=/var/local/ckan/default/pyenv/src/ckanext-datastorer version=dev.publicamundi.eu
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
+
+- name: Run setup.py develop for ckanext-datastorer
+  action: command chdir=/var/local/ckan/default/pyenv/src/ckanext-datastorer/ ../../bin/python setup.py develop
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Install ckanext-datastorer requirements
+  action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-datastorer/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Get ckanext-spatial from git
+  action: git repo=https://github.com/PublicaMundi/ckanext-spatial.git dest=/var/local/ckan/default/pyenv/src/ckanext-spatial version=dev.publicamundi.eu
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
+
+- name: Run setup.py develop for ckanext-spatial
+  action: command chdir=/var/local/ckan/default/pyenv/src/ckanext-spatial/ ../../bin/python setup.py develop
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Install ckanext-spatial requirements
+  action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-spatial/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
