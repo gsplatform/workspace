@@ -12,10 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
 
     ansible.playbook = "deployment/common-redhat/playbook.yml"
+    ansible.inventory_path = "inventory/hosts.yml"
 
     ansible.sudo = true
     ansible.sudo_user = 'root'
-    ansible.verbose = 'v'
+    ansible.verbose = 'vvvv'
 
     ansible.extra_vars = {
       ansible_ssh_user: 'vagrant'
