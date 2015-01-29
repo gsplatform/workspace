@@ -1,0 +1,14 @@
+#
+# Fixes data import error
+# https://www.chatwork.com/#!rid26556693-531858998
+#
+
+smtpd_tls_security_level = may
+smtpd_tls_key_file = /etc/pki/tls/private/localhost.key
+smtpd_tls_cert_file = /etc/pki/tls/certs/localhost.crt
+smtpd_tls_loglevel = 1
+smtpd_tls_session_cache_timeout = 3600s
+smtpd_tls_session_cache_database = btree:/var/lib/postfix/smtpd_tls_cache
+tls_random_source = dev:/dev/urandom
+tls_random_exchange_name = /var/lib/postfix/prng_exch
+smtpd_tls_auth_only = yes
