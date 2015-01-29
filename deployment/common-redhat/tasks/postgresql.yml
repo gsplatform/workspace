@@ -32,7 +32,7 @@
 - name: Copy PostgreSQL configuration files
   action: copy src={{item}} dest=/{{item}}
   with_items:
-    - var/lib/pgsql/9.3/data/postgresql.conf
+    # - var/lib/pgsql/9.3/data/postgresql.conf
     - var/lib/pgsql/9.3/data/pg_hba.conf
 
 - name: Start PostgreSQL service
