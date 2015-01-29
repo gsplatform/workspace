@@ -27,7 +27,7 @@
   command: service postgresql-9.3 initdb
 
 - name: Backup default postgresql.conf
-  shell: "cd /var/lib/pgsql/9.3/data && mv postgresql.conf postgresql.conf.orig"
+  # shell: "cd /var/lib/pgsql/9.3/data && mv postgresql.conf postgresql.conf.orig"
 
 - name: Copy PostgreSQL configuration files
   action: copy src={{item}} dest=/{{item}}
