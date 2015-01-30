@@ -4,7 +4,7 @@
 ###############
 
 - name: Get pycsw
-  action: git repo=https://github.com/GSPF/pycsw.git dest=/var/local/ckan/default/pyenv/src/pycsw version=dev.publicamundi.eu
+  action: git repo=https://github.com/PublicaMundi/pycsw.git dest=/var/local/ckan/default/pyenv/src/pycsw version=dev.publicamundi.eu
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src

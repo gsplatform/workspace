@@ -4,7 +4,7 @@
 ######################
 
 - name: Get ckanext-publicamundi from git
-  action: git repo=https://github.com/GSPF/ckanext-publicamundi.git dest=/var/local/ckan/default/pyenv/src/ckanext-publicamundi version=95-python2.6
+  action: git repo=https://github.com/kalxas/ckanext-publicamundi.git dest=/var/local/ckan/default/pyenv/src/ckanext-publicamundi version=95-python2.6
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
