@@ -47,15 +47,6 @@
 - name: Create ckan_datastorer role
   action: postgresql_user user=ckan_datastorer password=ckan_datastorer role_attr_flags=NOCREATEDB,LOGIN state=present
 
-- name: Create geoserver role
-  action: postgresql_user user=geoserver password=geoserver role_attr_flags=NOCREATEDB,LOGIN state=present
-
-- name: Create rasdaman role
-  action: postgresql_user user=rasdaman password=rasdaman role_attr_flags=NOCREATEDB,LOGIN state=present
-
-- name: Create petauser role
-  action: postgresql_user user=petauser password=petauser role_attr_flags=NOCREATEDB,LOGIN state=present
-
 - name: Create ckan database
   action: postgresql_db name=ckan owner=ckaner encoding='UTF-8'
 
@@ -67,16 +58,6 @@
 
 - name: Create ckan_data_tests database
   action: postgresql_db name=ckan_data_tests owner=ckan_datastorer encoding='UTF-8'
-
-- name: Create ckan_vector database
-  action: postgresql_db name=ckan_vector owner=ckan_datastorer encoding='UTF-8'
-
-- name: Create ckan_raster database
-  action: postgresql_db name=ckan_raster owner=rasdaman encoding='UTF-8'
-  # action: postgresql_db name=RASBASE owner=rasdaman encoding='UTF-8'
-
-- name: Create petascopedb database
-  action: postgresql_db name=petascopedb owner=petauser encoding='UTF-8'
 
 - name: Install postgis to ckan database
   action: command psql -d ckan -c 'CREATE EXTENSION "postgis";'

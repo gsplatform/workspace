@@ -40,10 +40,6 @@
 
     # Include tasks in the correct order
     - include: tasks/solr.yml
-    - include: tasks/geoserver.yml
     - include: tasks/postgresql.yml
     - include: tasks/ckan.yml
-    - include: tasks/pycsw.yml
-    - include: tasks/publicamundi.yml
-    - include: tasks/maps.yml
     - include: tasks/apache.yml
