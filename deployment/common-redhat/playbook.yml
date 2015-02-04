@@ -4,6 +4,9 @@
     - name: Install epel
       action: command creates=/etc/yum.repos.d/epel.repo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 
+    - name: Append custom database configuration
+      shell: "cat {{document_root}}/{{postgresql_conf_append}} >> /vagrant/README.md"
+
     - name: Install needed packages
       action: yum pkg={{item}} state=installed
       with_items:

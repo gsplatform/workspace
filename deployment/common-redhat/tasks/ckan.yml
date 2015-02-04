@@ -10,6 +10,12 @@
     - httpd
     - gdal-python
 
+- name: Append custom Postfix configuration
+  shell: "cat {{document_root}}/{{postfix_conf_append}} >> /etc/postfix/main.cf"
+
+- name: Restarting Postfix service
+  command: service postfix restart
+
 - name: Create link of pg_config for PostgreSQL 9.3
   action: command ln -s /usr/pgsql-9.3/bin/pg_config /usr/bin/pg_config
 
