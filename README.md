@@ -22,7 +22,7 @@ cat << EOS >> ~/.ssh/config
 Host dev
   HostName 127.0.0.1
   User vagrant
-  Port 2200
+  Port 2222
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
@@ -31,6 +31,11 @@ Host dev
   LogLevel FATAL
 EOS
 ```
+
+## setup ssh-agent for sharing sshe-key
+
+* `ssh-agent`
+* `ssh-add ~/.ssh/id_rsa`
 
 ## Using Vagrant
 
@@ -46,3 +51,172 @@ EOS
   vagrant up prod (not yett implemented)
   vagrant [ssh|halt|destroy] prod
 
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB
+#------------------------------------------------------------------------------
+# Customize for your needs
+# Commented out to run on VirtualBox, platform Linux
+#------------------------------------------------------------------------------
+
+#default_statistics_target = 100
+#maintenance_work_mem = 352MB
+#checkpoint_completion_target = 0.9
+#effective_cache_size = 4GB
+#work_mem = 28MB
+#wal_buffers = 16MB
+#checkpoint_segments = 32
+#shared_buffers = 1408MB

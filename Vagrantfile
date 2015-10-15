@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "chef/centos-6.5"
 
+  config.ssh.forward_agent = true
+
   # Automated deployment with Ansible
   config.vm.provision "ansible" do |ansible|
 
@@ -16,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     ansible.sudo = true
     ansible.sudo_user = 'root'
-    ansible.verbose = 'vvvv'
+    ansible.verbose = 'vvv'
 
     ansible.extra_vars = {
       ansible_ssh_user: 'vagrant'
@@ -28,6 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     dev.vm.network :forwarded_port, guest: 80,   host: 8000
     dev.vm.network :forwarded_port, guest: 8080, host: 8080
+    dev.vm.network :forwarded_port, guest: 5000, host: 5000
 
     # Virtualbox configuration
     # (Adjust values to match your hardware)

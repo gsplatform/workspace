@@ -18,12 +18,14 @@
 
 - name: Create link of pg_config for PostgreSQL 9.3
   action: command ln -s /usr/pgsql-9.3/bin/pg_config /usr/bin/pg_config
+  ignore_errors: yes
 
 - name: Add CKAN path
   action: file path=/var/local/ckan/default state=directory
 
 - name: Add deployment folders
   shell: "cd /var/local/ckan/default && mkdir log && mkdir run && mkdir tmp && mkdir -p files/resources && mkdir -p files/storage"
+  ignore_errors: yes
 
 - name: Create virtualenv for CKAN
   shell: virtualenv --setuptools --system-site-packages /var/local/ckan/default/pyenv
@@ -39,8 +41,13 @@
   sudo: yes
   sudo_user: ckaner
 
+- name: Change permissions of source folder
+  shell: chmod 777 /var/local/ckan/default/pyenv/src
+
 - name: Get CKAN from git
-  action: git repo=git@github.com:ckan/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version=release-v2.4.2
+  git: repo=git@github.com:gsplatform/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version="release-v2.4.2" accept_hostkey=True
+  sudo: False
+
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src/ckan
@@ -56,7 +63,9 @@
   sudo_user: ckaner
 
 - name: Get ckanext-archiver from git
-  action: git repo=https://github.com/gsplatform/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver
+  action: git repo=https://github.com/gsplatform/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver accept_hostkey=True
+  sudo: False
+
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -72,7 +81,9 @@
   sudo_user: ckaner
 
 - name: Get ckanext-datastorer from git
-  action: git repo=https://github.com/gsplatform/ckanext-datastorer.git dest=/var/local/ckan/default/pyenv/src/ckanext-datastorer
+  action: git repo=https://github.com/gsplatform/ckanext-datastorer.git dest=/var/local/ckan/default/pyenv/src/ckanext-datastorer accept_hostkey=True
+  sudo: False
+
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -87,8 +98,11 @@
   sudo: yes
   sudo_user: ckaner
 
-- name: Get ckanext-spatial from git
-  action: git repo=https://github.com/gsplatform/ckanext-spatial.git dest=/var/local/ckan/default/pyenv/src/ckanext-spatial
+- name: install GeoAlchemy2
+  pip: name=GeoAlchemy2 virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -104,7 +118,9 @@
   sudo_user: ckaner
 
 - name: Get ckanext-geoview from git
-  action: git repo=git@github.com:gsplatform/ckanext-geoview.git dest=/var/local/ckan/default/pyenv/src/ckanext-geoview
+  action: git repo=git@github.com:gsplatform/ckanext-geoview.git dest=/var/local/ckan/default/pyenv/src/ckanext-geoview accept_hostkey=True
+  sudo: False
+
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -113,3 +129,16 @@
   action: command chdir=/var/local/ckan/default/pyenv/src/ckanext-geoview/ ../../bin/python setup.py develop
   sudo: yes
   sudo_user: ckaner
+
+- name: Create folder
+  file: path=/var/local/ckan/default/pyenv/src/pycsw state=directory owner=ckaner mode=0755
+
+- name: Copy ckan configuration files
+  action: copy src={{item}} dest=/{{item}} mode=644
+  with_items:
+    - var/local/ckan/default/pyenv/src/pycsw/csw.wsgi
+    - var/local/ckan/default/pyenv/src/pycsw/default.cfg
+    - var/local/ckan/default/pyenv/src/ckan/wsgi.py
+    - var/local/ckan/default/pyenv/src/ckan/development.ini
+
+

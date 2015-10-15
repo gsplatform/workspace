@@ -29,6 +29,13 @@
   with_items:
     - etc/httpd/conf.d/ckan.conf
 
+- name: Copy ckan configuration files
+  action: copy src={{item}} dest=/{{item}} mode=644
+  with_items:
+    - var/local/ckan/default/pyenv/src/pycsw/csw.wsgi
+    - var/local/ckan/default/pyenv/src/pycsw/default.cfg
+    - var/local/ckan/default/pyenv/src/ckan/wsgi.py
+
 - name: Restart apache
   action: service name=httpd state=restarted
 
