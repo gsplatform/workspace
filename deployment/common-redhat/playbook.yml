@@ -42,7 +42,7 @@
       command: /usr/sbin/setenforce 0
 
     # Include tasks in the correct order
-    #- include: tasks/solr.yml
-    #- include: tasks/postgresql.yml
+#- include: tasks/solr.yml
+#    - include: tasks/postgresql.yml
     - include: tasks/ckan.yml
-#- include: tasks/apache.yml
+    - include: tasks/apache.yml
