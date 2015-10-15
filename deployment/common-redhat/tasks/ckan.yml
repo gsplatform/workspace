@@ -141,4 +141,6 @@
     - var/local/ckan/default/pyenv/src/ckan/wsgi.py
     - var/local/ckan/default/pyenv/src/ckan/development.ini
 
+- name: init db
+  action: command /var/local/ckan/default/pyenv/bin/paster --plugin=ckan db init -c /var/local/ckan/default/pyenv/src/ckan/development.ini
 

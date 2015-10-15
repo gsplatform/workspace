@@ -77,3 +77,49 @@
   action: command psql -d ckan_tests -c 'ALTER TABLE spatial_ref_sys OWNER TO ckaner'
   sudo: yes
   sudo_user: postgres
+
+- name: Revoke read only user
+  action: command psql -d ckan_data -c 'REVOKE CREATE ON SCHEMA public FROM PUBLIC'
+
+- name: Revoke read only user
+  action: command psql -d ckan_data -c 'REVOKE USAGE ON SCHEMA public FROM PUBLIC'
+
+- name: Grant access to ckaner
+  action: command psql -d ckan_data -c 'GRANT CREATE ON SCHEMA public TO "ckaner"'
+
+- name: Grant access to ckaner
+  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
+
+- name: take connect permissions from main db
+  action: command psql -d ckan_data -c 'REVOKE CONNECT ON DATABASE "ckan" FROM "ckaner"'
+
+- name: grant select permissions for read-only user
+  action: command psql -d ckan_data -c 'GRANT CONNECT ON DATABASE "ckan_data" TO "ckaner"'
+
+- name: grant select permissions for read-only user
+  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
+
+- name: grant access to current tables and views to read-only user
+  action: command psql -d ckan_data -c 'GRANT SELECT ON ALL TABLES IN SCHEMA public TO "ckaner"'
+
+- name: grant access to new tables and views by default
+  action: command psql -d ckan_data -c 'ALTER DEFAULT PRIVILEGES FOR USER "ckan_datastorer" IN SCHEMA public GRANT SELECT ON TABLES TO "ckaner"'
+
+- name: grant access to new tables and views by default
+  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
+
+- name: take connect permissions from main db
+  action: command psql -d ckan_data -c 'REVOKE CONNECT ON DATABASE "ckan" FROM "ckaner"'
+
+- name: grant select permissions for read-only user
+  action: command psql -d ckan_data -c 'GRANT CONNECT ON DATABASE "ckan_data" TO "ckaner"'
+
+- name: grant select permissions for read-only user
+  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
+
+- name: grant access to current tables and views to read-only user
+  action: command psql -d ckan_data -c 'GRANT SELECT ON ALL TABLES IN SCHEMA public TO "ckaner"'
+
+- name: grant access to new tables and views by default
+  action: command psql -d ckan_data -c 'ALTER DEFAULT PRIVILEGES FOR USER "ckan_datastorer" IN SCHEMA public GRANT SELECT ON TABLES TO "ckaner"'
+
