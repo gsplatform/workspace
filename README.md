@@ -32,7 +32,7 @@ Host dev
 EOS
 ```
 
-## setup ssh-agent for sharing sshe-key
+## setup ssh-agent for sharing ssh-key for cloning GitHub private repos
 
 * `ssh-agent`
 * `ssh-add ~/.ssh/id_rsa`
@@ -41,14 +41,17 @@ EOS
 
 * Startup a development environment (default)
 
+```
   vagrant up
   vagrant [ssh|halt|destroy]
+```
 
 (you need SSH keyset at ~/.ssh/id_rsa(.pub) and the key is registered on the gsplatform GitHub repo. )
 
 * Startup a demo/production server
 
+```
   vagrant up prod (not yett implemented)
   vagrant [ssh|halt|destroy] prod
-
+```
 
