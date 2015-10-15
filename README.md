@@ -1,10 +1,10 @@
 # Development Worksapce
 
-This repository is devoted to the development and deployment of PublicaMundi.
+This repository is devoted to the development and deployment of CKAN
 The reason for its existance is:
 
 * to manage issues regarding the deployment
-* to provide setup scripts (e.g based on ansible) for this deployment  
+* to provide setup scripts (e.g based on ansible) for this deployment
 * to setup a development environment using Vagrant
 
 ## Getting Started
@@ -12,40 +12,37 @@ The reason for its existance is:
 * Install Vagrant
 * Install Ansible `pip install ansible`
 
+* `git clone git@github.com:gsplatform/workspace.git`
+* `cd workspace`
+
+## setup configuration for ansible
+
+```
+cat << EOS >> ~/.ssh/config
+Host dev
+  HostName 127.0.0.1
+  User vagrant
+  Port 2200
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile `pwd`/.vagrant/machines/dev/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+EOS
+```
+
 ## Using Vagrant
 
 * Startup a development environment (default)
 
-	vagrant up
-	vagrant [ssh|halt|destroy]
+  vagrant up
+  vagrant [ssh|halt|destroy]
 
-* Startup a demo/production server 
+(you need SSH keyset at ~/.ssh/id_rsa(.pub) and the key is registered on the gsplatform GitHub repo. )
 
-	vagrant up prod
-	vagrant [ssh|halt|destroy] prod
-#------------------------------------------------------------------------------
-# Customize for your needs
-# Commented out to run on VirtualBox, platform Linux
-#------------------------------------------------------------------------------
+* Startup a demo/production server
 
-#default_statistics_target = 100
-#maintenance_work_mem = 352MB
-#checkpoint_completion_target = 0.9
-#effective_cache_size = 4GB
-#work_mem = 28MB
-#wal_buffers = 16MB
-#checkpoint_segments = 32
-#shared_buffers = 1408MB
-#------------------------------------------------------------------------------
-# Customize for your needs
-# Commented out to run on VirtualBox, platform Linux
-#------------------------------------------------------------------------------
+  vagrant up prod (not yett implemented)
+  vagrant [ssh|halt|destroy] prod
 
-#default_statistics_target = 100
-#maintenance_work_mem = 352MB
-#checkpoint_completion_target = 0.9
-#effective_cache_size = 4GB
-#work_mem = 28MB
-#wal_buffers = 16MB
-#checkpoint_segments = 32
-#shared_buffers = 1408MB
