@@ -40,7 +40,7 @@
   sudo_user: ckaner
 
 - name: Get CKAN from git
-  action: git repo=https://github.com/gsplatform/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version=dev.publicamundi.eu
+  action: git repo=git@github.com:ckan/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version=release-v2.4.2
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src/ckan
@@ -56,7 +56,7 @@
   sudo_user: ckaner
 
 - name: Get ckanext-archiver from git
-  action: git repo=https://github.com/gsplatform/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver version=dev.publicamundi.eu
+  action: git repo=https://github.com/gsplatform/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -72,7 +72,7 @@
   sudo_user: ckaner
 
 - name: Get ckanext-datastorer from git
-  action: git repo=https://github.com/gsplatform/ckanext-datastorer.git dest=/var/local/ckan/default/pyenv/src/ckanext-datastorer version=dev.publicamundi.eu
+  action: git repo=https://github.com/gsplatform/ckanext-datastorer.git dest=/var/local/ckan/default/pyenv/src/ckanext-datastorer
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -88,7 +88,7 @@
   sudo_user: ckaner
 
 - name: Get ckanext-spatial from git
-  action: git repo=https://github.com/gsplatform/ckanext-spatial.git dest=/var/local/ckan/default/pyenv/src/ckanext-spatial version=dev.publicamundi.eu
+  action: git repo=https://github.com/gsplatform/ckanext-spatial.git dest=/var/local/ckan/default/pyenv/src/ckanext-spatial
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -100,5 +100,16 @@
 
 - name: Install ckanext-spatial requirements
   action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-spatial/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Get ckanext-geoview from git
+  action: git repo=git@github.com:gsplatform/ckanext-geoview.git dest=/var/local/ckan/default/pyenv/src/ckanext-geoview
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
+
+- name: Run setup.py develop for ckanext-geoview
+  action: command chdir=/var/local/ckan/default/pyenv/src/ckanext-geoview/ ../../bin/python setup.py develop
   sudo: yes
   sudo_user: ckaner

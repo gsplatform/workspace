@@ -2,6 +2,8 @@
 ##############
 # SOLR setup #
 ##############
+vars:
+  solr_version: 4.10.1
 
 - name: Install Tomcat and Java
   action: yum pkg={{item}} state=installed
@@ -29,14 +31,14 @@
 - name: Unpack slf4j
   shell: "cd ~/ && tar -zxvf slf4j-1.7.5.tar.gz && cd slf4j-1.7.5 && cp slf4j-*.jar /usr/share/tomcat6/lib/"
 
-- name: Download SOLR 4.2.1
-  get_url: url="http://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz" dest="~/"
+- name: Download SOLR
+  get_url: url="http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz" dest="~/"
 
 - name: Unpack SOLR
-  shell: "cd ~/ && tar -zxvf solr-4.2.1.tgz && cd solr-4.2.1/dist && cp solr-4.2.1.war /var/lib/tomcat6/webapps/solr.war"
+  shell: "cd ~/ && tar -zxvf solr-{{ solr_version }}.tgz && cd solr-{{ solr_version }}/dist && cp solr-{{ solr_version }}.war /var/lib/tomcat6/webapps/solr.war"
 
 - name: Setup SOLR home folder
-  shell: "mkdir /home/solr && cp -R ~/solr-4.2.1/example/solr/* /home/solr && chown -R tomcat /home/solr"
+  shell: "mkdir /home/solr && cp -R ~/solr-{{ solr_version }}/example/solr/* /home/solr && chown -R tomcat /home/solr"
 
 - name: Restarting tomcat service
   command: service tomcat6 start
