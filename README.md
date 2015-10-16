@@ -43,17 +43,24 @@ EOS
 
 ```
   vagrant up
-  vagrant [ssh|halt|destroy]
+  vagrant provision
 ```
+
 
 (you need SSH keyset at ~/.ssh/id_rsa(.pub) and the key is registered on the gsplatform GitHub repo. )
 
-* Startup a demo/production server
+After finished, please access to http://ckan:8000/
+
+(you need to set ckan -> localhost setting on /etc/hosts)
+
+* Startup a demo/production server(not yet implemented)
 
 ```
-  vagrant up prod (not yett implemented)
+  vagrant up prod
   vagrant [ssh|halt|destroy] prod
 ```
+
+# Additional setup
 
 For some reason the ansible script hangs at installing ckanext-datastorer requrement modules.
 So I commented out the process.
