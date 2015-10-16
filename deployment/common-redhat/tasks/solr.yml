@@ -55,3 +55,6 @@
 
 - name: Restarting tomcat service
   command: service tomcat6 restart
+
+- name: Create status file after installing
+  shell: "echo 1 > /home/solr/installed"

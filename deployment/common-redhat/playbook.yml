@@ -42,7 +42,30 @@
       command: /usr/sbin/setenforce 0
 
     # Include tasks in the correct order
-#- include: tasks/solr.yml
-#    - include: tasks/postgresql.yml
+    # SOLR
+    - stat: path=/home/solr/installed
+      register: solr
+
+    - include: tasks/solr.yml
+      when: solr.stat.exists == False
+
+    # PostgreSQL
+    - stat: path=/var/lib/pgsql/9.3/data/pg_hba.conf
+      register: postgres
+
+    - include: tasks/postgresql.yml
+      when: postgres.stat.exists == False
+
+    # CKAN
+    - stat: path=/var/local/ckan/installed
+      register: ckan
+
     - include: tasks/ckan.yml
+      when: ckan.stat.exists == False
+
+    # Apache
+    - stat: path=/var/local/ckan/default/pyenv/src/ckan/wsgi.py
+      register: apache
+
     - include: tasks/apache.yml
+      when: apache.stat.exists == False

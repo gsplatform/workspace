@@ -44,9 +44,13 @@
 - name: Change permissions of source folder
   shell: chmod 777 /var/local/ckan/default/pyenv/
 
+- stat: path=/var/local/ckan/default/pyenv/src/ckan
+  register: ckan
+
 - name: Get CKAN from git
   git: repo=git@github.com:gsplatform/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version="release-v2.4.2" accept_hostkey=True
   sudo: False
+  when: ckan.stat.exists == False
 
 - name: Change permissions of source folder
   shell: chmod 777 /var/local/ckan/default/pyenv/src
@@ -64,10 +68,13 @@
   sudo: yes
   sudo_user: ckaner
 
+- stat: path=/var/local/ckan/default/pyenv/src/ckanext-archiver
+  register: archiver
+
 - name: Get ckanext-archiver from git
   action: git repo=https://github.com/gsplatform/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver accept_hostkey=True
   sudo: False
-
+  when: archiver.stat.exists == False
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -82,9 +89,13 @@
   sudo: yes
   sudo_user: ckaner
 
+- stat: path=/var/local/ckan/default/pyenv/src/ckanext-datastorer
+  register: datastorer
+
 - name: Get ckanext-datastorer from git
   action: git repo=https://github.com/gsplatform/ckanext-datastorer.git dest=/var/local/ckan/default/pyenv/src/ckanext-datastorer accept_hostkey=True
   sudo: False
+  when: datastorer.stat.exists == False
 
 
 - name: Change owner of source folder
@@ -105,6 +116,14 @@
   sudo: yes
   sudo_user: ckaner
 
+
+- stat: path=/var/local/ckan/default/pyenv/src/ckanext-spatial
+  register: spatial
+
+- name: Get ckanext-spatial from git
+  action: git repo=https://github.com/gsplatform/ckanext-spatial.git dest=/var/local/ckan/default/pyenv/src/ckanext-spatial accept_hostkey=True
+  sudo: False
+  when: spatial.stat.exists == False
 
 - name: Change owner of source folder
   shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
@@ -132,11 +151,27 @@
   sudo: yes
   sudo_user: ckaner
 
+- stat: path=/var/local/ckan/default/pyenv/src/ckanext-preview
+  register: preview
+
+- name: Get ckanext-pdfview from git
+  action: git repo=https://github.com/ckan/ckanext-pdfview.git dest=/var/local/ckan/default/pyenv/src/ckanext-pdfview accept_hostkey=True
+  sudo: False
+  when: preview.stat.exists == False
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
+
+- name: Run setup.py develop for ckanext-pdfview
+  action: command chdir=/var/local/ckan/default/pyenv/src/ckanext-pdfview/ ../../bin/python setup.py develop
+  sudo: yes
+  sudo_user: ckaner
+
 - name: Create folder
   file: path=/var/local/ckan/default/pyenv/src/pycsw state=directory owner=ckaner mode=0755
 
 - name: Copy ckan configuration files
-  action: copy src={{item}} dest=/{{item}} mode=644
+  action: copy src={{item}} dest=/{{item}} mode=644 force=yes
   with_items:
     - var/local/ckan/default/pyenv/src/pycsw/csw.wsgi
     - var/local/ckan/default/pyenv/src/pycsw/default.cfg
@@ -145,4 +180,6 @@
 
 - name: init db
   action: command /var/local/ckan/default/pyenv/bin/paster --plugin=ckan db init -c /var/local/ckan/default/pyenv/src/ckan/development.ini
+  sudo: yes
+  sudo_user: ckaner
 
