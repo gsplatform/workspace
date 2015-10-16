@@ -26,11 +26,11 @@
 - name: Unpack common-logging
   shell: "cd ~/ && tar -zxvf commons-logging-1.2-bin.tar.gz && cd commons-logging-1.2 && cp commons-logging-*.jar /usr/share/tomcat6/lib/"
 
-- name: Download slf4j 1.7.5
-  get_url: url="http://www.slf4j.org/dist/slf4j-1.7.5.tar.gz" dest="~/"
+- name: Download slf4j 1.7.12
+  get_url: url="http://www.slf4j.org/dist/slf4j-1.7.12.tar.gz" dest="~/"
 
 - name: Unpack slf4j
-  shell: "cd ~/ && tar -zxvf slf4j-1.7.5.tar.gz && cd slf4j-1.7.5 && cp slf4j-*.jar /usr/share/tomcat6/lib/"
+  shell: "cd ~/ && tar -zxvf slf4j-1.7.12.tar.gz && cd slf4j-1.7.12 && cp slf4j-*.jar /usr/share/tomcat6/lib/"
 
 - name: Download SOLR
   get_url: url="http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz" dest="~/"
