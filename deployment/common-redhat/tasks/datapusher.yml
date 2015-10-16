@@ -1,0 +1,54 @@
+---
+##############
+# CKAN setup #
+##############
+- name: Set install dir
+  set_fact:
+    dp_dir: /var/local/ckan/datapusher
+    dp_src: /var/local/ckan/datapusher/src/datapusher
+
+- name: Create virtualenv for DataPusher
+  shell: virtualenv {{dp_dir}}
+
+- name: create a source directory and switch to it
+  file: path="{{dp_dir}}/src" state=directory
+
+- name: create a source directory and switch to it
+  file: path=/etc/ckan state=directory
+
+- name: Change permissions of source folder
+  shell: chmod 777 "{{dp_dir}}/src"
+
+- name: clone the source (always target the stable branch)
+  git: repo=https://github.com/ckan/datapusher.git version=stable dest="{{dp_src}}" accept_hostkey=True
+  sudo: False
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users {{dp_dir}}
+
+- name: install the DataPusher and its requirements
+  pip: requirements="{{dp_src}}/requirements.txt" virtualenv={{dp_dir}}
+  sudo: yes
+  sudo_user: ckaner
+
+- name: run setup.py
+  command: chdir={{dp_src}} "{{dp_dir}}/bin/python" setup.py develop
+  sudo: yes
+  sudo_user: ckaner
+
+- name: copy the standard Apache config file
+  action: copy src=etc/ckan/datapusher.conf dest=/etc/httpd/conf.d/ mode=644 force=yes
+
+- name: copy the standard DataPusher wsgi file
+  action: copy src={{item}} dest=/{{item}} mode=644 force=yes
+  with_items:
+    - etc/ckan/datapusher.wsgi
+
+- name: copy the standard DataPusher settings.
+  command: chdir={{dp_src}} cp deployment/datapusher_settings.py /etc/ckan/
+
+- name: Restart apache
+  action: service name=httpd state=restarted
+
+- name: Create status file after installing
+  shell: "echo 1 > /var/local/ckan/datapusher/installed"

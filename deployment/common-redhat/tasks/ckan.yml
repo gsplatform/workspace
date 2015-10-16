@@ -168,5 +168,14 @@
   sudo: yes
   sudo_user: ckaner
 
+- name: Change permissions of files folder
+  shell: chmod 777 /var/local/ckan/default/files
+
+- name: Change permissions of tmp folder
+  shell: chmod 777 /var/local/ckan/default/tmp
+
+- name: Change permissions of tmp folder
+  shell: chmod 777 /var/local/ckan/default/log
+
 - name: Create status file after installing
   shell: "echo 1 > /var/local/ckan/installed"

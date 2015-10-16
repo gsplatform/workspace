@@ -63,6 +63,12 @@
     - include: tasks/ckan.yml
       when: ckan.stat.exists == False
 
+    # CKAN extension
+    - include: tasks/ckanext.yml
+
+    # Datapusher
+    - include: tasks/datapusher.yml
+
     # Apache
     - stat: path=/etc/httpd/conf.d/ckan.conf
       register: apache
