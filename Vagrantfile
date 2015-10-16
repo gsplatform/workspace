@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Setup a development environment
   config.vm.define "dev" do |dev|
 
-    dev.vm.network :forwarded_port, guest: 80,   host: 8000
+    dev.vm.network :forwarded_port, guest: 8000, host: 8000
     dev.vm.network :forwarded_port, guest: 8080, host: 8080
     dev.vm.network :forwarded_port, guest: 8800, host: 8800
     dev.vm.network :forwarded_port, guest: 5000, host: 5000

@@ -67,7 +67,11 @@
     - include: tasks/ckanext.yml
 
     # Datapusher
+    - stat: path=/var/local/ckan/datapusher/installed
+      register: datapusher
+
     - include: tasks/datapusher.yml
+      when: datapusher.stat.exists == False
 
     # Apache
     - stat: path=/etc/httpd/conf.d/ckan.conf

@@ -25,9 +25,12 @@
   action: file path=/etc/httpd/conf.d/welcome.conf state=absent
 
 - name: Copy apache configuration files
-  action: copy src={{item}} dest=/{{item}} mode=644
-  with_items:
-    - etc/httpd/conf.d/ckan.conf
+  action: copy src=etc/httpd/conf.d/ckan.conf.dev dest=/etc/httpd/conf.d/ckan.conf mode=644
+  when: inventory_hostname == 'dev'
+
+- name: Copy apache configuration files
+  action: copy src=etc/httpd/conf.d/ckan.conf.prd dest=/etc/httpd/conf.d/ckan.conf mode=644
+  when: inventory_hostname == 'prd'
 
 - name: Copy ckan configuration files
   action: copy src={{item}} dest=/{{item}} mode=644

@@ -1,5 +1,10 @@
 WSGISocketPrefix /var/run/wsgi
-<VirtualHost 0.0.0.0:80>
+NameVirtualHost *:8000
+Listen 8000
+NameVirtualHost *:8800
+Listen 8800
+
+<VirtualHost 0.0.0.0:8000>
 
     ServerName ckan
 
@@ -27,6 +32,3 @@ WSGISocketPrefix /var/run/wsgi
     CustomLog /var/log/httpd/ckan.custom.log combined
 
 </VirtualHost>
-meVirtualHost *:8800
-Listen 8800
-
