@@ -45,7 +45,7 @@
   shell: chmod 777 /var/local/ckan/default/pyenv/
 
 - name: Get CKAN from git
-  git: repo=git@github.com:gsplatform/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version="release-v2.4.2" accept_hostkey=True
+  git: repo=git@github.com:ckan/ckan.git dest=/var/local/ckan/default/pyenv/src/ckan version="release-v2.4.2" accept_hostkey=True
   sudo: False
 
 - name: Change permissions of source folder
