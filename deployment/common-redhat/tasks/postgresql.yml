@@ -78,48 +78,4 @@
   sudo: yes
   sudo_user: postgres
 
-- name: Grant access to ckaner
-  action: command psql -d ckan_data -c 'GRANT CREATE ON SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: Grant access to ckaner
-  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant select permissions for read-only user
-  action: command psql -d ckan_data -c 'GRANT CONNECT ON DATABASE "ckan_data" TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant select permissions for read-only user
-  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant access to current tables and views to read-only user
-  action: command psql -d ckan_data -c 'GRANT SELECT ON ALL TABLES IN SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant access to new tables and views by default
-  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant select permissions for read-only user
-  action: command psql -d ckan_data -c 'GRANT CONNECT ON DATABASE "ckan_data" TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant select permissions for read-only user
-  action: command psql -d ckan_data -c 'GRANT USAGE ON SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
-
-- name: grant access to current tables and views to read-only user
-  action: command psql -d ckan_data -c 'GRANT SELECT ON ALL TABLES IN SCHEMA public TO "ckaner"'
-  sudo: yes
-  sudo_user: postgres
 

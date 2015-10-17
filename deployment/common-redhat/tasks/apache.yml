@@ -39,6 +39,14 @@
     - var/local/ckan/default/pyenv/src/pycsw/default.cfg
     - var/local/ckan/default/pyenv/src/ckan/wsgi.py
 
+- name: copy the standard Apache config file
+  action: copy src=etc/ckan/datapusher.conf dest=/etc/httpd/conf.d/ mode=644 force=yes
+
+- name: copy the standard DataPusher wsgi file
+  action: copy src={{item}} dest=/{{item}} mode=644 force=yes
+  with_items:
+    - etc/ckan/datapusher.wsgi
+
 - name: Restart apache
   action: service name=httpd state=restarted
 

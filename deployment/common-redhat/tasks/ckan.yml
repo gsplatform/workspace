@@ -67,6 +67,19 @@
 - stat: path=/var/local/ckan/default/pyenv/src/ckanext-archiver
   register: archiver
 
+- name: Install ckanext-datastorer
+  action: pip name=git+git://github.com/ckan/ckanext-datastorer.git#egg=ckanext-datastorer virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
+- name: Change owner of source folder
+  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
+
+- name: Install ckanext-datastorer requirements
+  action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-datastorer/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
+  sudo: yes
+  sudo_user: ckaner
+
 - name: Get ckanext-archiver from git
   action: git repo=https://github.com/gsplatform/ckanext-archiver.git dest=/var/local/ckan/default/pyenv/src/ckanext-archiver accept_hostkey=True
   sudo: False
@@ -83,20 +96,6 @@
   action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-archiver/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
   sudo: yes
   sudo_user: ckaner
-
-- name: Get ckanext-datastorer from git
-  action: pip name=git+git://github.com/ckan/ckanext-datastorer.git#egg=ckanext-datastorer virtualenv=/var/local/ckan/default/pyenv/
-  sudo: yes
-  sudo_user: ckaner
-
-- name: Change owner of source folder
-  shell: chown -R ckaner:users /var/local/ckan/default/pyenv/src
-
-# somehow this doesn't work
-#- name: Install ckanext-datastorer requirements
-#  action: pip requirements=/var/local/ckan/default/pyenv/src/ckanext-datastorer/pip-requirements.txt virtualenv=/var/local/ckan/default/pyenv/
-#  sudo: yes
-#  sudo_user: ckaner
 
 - name: install GeoAlchemy2
   pip: name=GeoAlchemy2 virtualenv=/var/local/ckan/default/pyenv/
@@ -168,14 +167,19 @@
   sudo: yes
   sudo_user: ckaner
 
+- name: set permissions
+  shell: "cd /var/local/ckan/default/pyenv && . bin/activate && cd src/ckan && paster --plugin=ckan datastore set-permissions -c ./development.ini | sudo -u postgres psql --set ON_ERROR_STOP=1"
+
 - name: Change permissions of files folder
-  shell: chmod 777 /var/local/ckan/default/files
+  shell: chmod -R 777 /var/local/ckan/default/files
 
 - name: Change permissions of tmp folder
-  shell: chmod 777 /var/local/ckan/default/tmp
+  shell: chmod -R 777 /var/local/ckan/default/tmp
 
 - name: Change permissions of tmp folder
-  shell: chmod 777 /var/local/ckan/default/log
+  shell: chmod -R 777 /var/local/ckan/default/log
 
 - name: Create status file after installing
   shell: "echo 1 > /var/local/ckan/installed"
+
+
