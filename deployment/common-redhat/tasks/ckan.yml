@@ -124,7 +124,7 @@
   sudo_user: ckaner
 
 - name: Get ckanext-geoview from git
-  action: git repo=git@github.com:gsplatform/ckanext-geoview.git dest=/var/local/ckan/default/pyenv/src/ckanext-geoview accept_hostkey=True
+  action: git repo=git@github.com:ckan/ckanext-geoview.git dest=/var/local/ckan/default/pyenv/src/ckanext-geoview accept_hostkey=True
   sudo: False
 
 
